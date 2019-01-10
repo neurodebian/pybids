@@ -1,0 +1,7 @@
+pybids (0.7.0-1) UNRELEASED; urgency=low
+
+  * Initial packaging
+    - (Closes: #)
+    - source package automatically created by stdeb 0.8.5
+
+ -- Yaroslav Halchenko <debian@onerussian.com>  Thu, 10 Jan 2019 17:17:13 -0500

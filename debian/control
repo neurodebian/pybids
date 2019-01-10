@@ -1,0 +1,20 @@
+Source: pybids
+Maintainer: Yaroslav Halchenko <debian@onerussian.com>
+Section: python
+Priority: optional
+Build-Depends: 
+ , debhelper (>= 9)
+ , dh-python
+ , python3-setuptools (>= 0.6b3)
+ , python3-all (>= 2.6.6-3)
+Standards-Version: 4.3.0
+Homepage: http://github.com/bids-standard/pybids
+
+Package: python3-pybids
+Architecture: all
+Depends: ${misc:Depends}, ${python:Depends}
+Description: interface with datasets conforming BIDS
+ BIDS is a Brain Imaging Data Structure standard, developed within the
+ neuroimaging community.  See http://bids.neuroimaging.io for more 
+ information.  PyBIDS is a Python module to interface with datasets 
+ conforming BIDS.
