@@ -93,10 +93,10 @@ class BIDSVariableCollection(object):
                 all variables are returned.
             format (str): Whether to return a DataFrame in 'wide' or 'long'
                 format. In 'wide' format, each row is defined by a unique
-                onset/duration, and each variable is in a separate column. In
-                'long' format, each row is a unique combination of onset,
-                duration, and variable name, and a single 'amplitude' column
-                provides the value.
+                entity combination, and each variable is in a separate column.
+                In 'long' format, each row is a unique combination of entities
+                and variable names, and a single 'amplitude' column provides
+                the value.
             fillna: Replace missing values with the specified value.
             kwargs: Optional keyword arguments to pass onto each Variable's
                 to_df() call (e.g., condition, entities, and timing).
@@ -146,7 +146,7 @@ class BIDSVariableCollection(object):
             _data = pd.DataFrame(data[col].values, columns=['amplitude'])
             if entities is not None:
                 _data = pd.concat([_data, entities], axis=1, sort=True)
-            variables.append(SimpleVariable(col, _data, source))
+            variables.append(SimpleVariable(name=col, data=_data, source=source))
         return BIDSVariableCollection(variables)
 
     def clone(self):
@@ -228,6 +228,9 @@ class BIDSRunVariableCollection(BIDSVariableCollection):
     def __init__(self, variables, sampling_rate=None):
         # Don't put the default value in signature because None is passed from
         # several places and we don't want multiple conflicting defaults.
+        if sampling_rate:
+            if isinstance(sampling_rate, str):
+                raise ValueError("Sampling rate must be numeric.")
         self.sampling_rate = sampling_rate or 10
         super(BIDSRunVariableCollection, self).__init__(variables)
 
@@ -376,6 +379,12 @@ def merge_collections(collections, force_dense=False, sampling_rate='auto'):
     variables = cls.merge_variables(variables, sampling_rate=sampling_rate)
 
     if isinstance(collections[0], BIDSRunVariableCollection):
+        if sampling_rate == 'auto':
+            rates = [var.sampling_rate for var in variables
+                     if isinstance(var, DenseRunVariable)]
+
+            sampling_rate = rates[0] if rates else None
+
         return cls(variables, sampling_rate)
 
     return cls(variables)

@@ -63,7 +63,11 @@ class BIDSReport(object):
         -------
         counter : :obj:`collections.Counter`
             A dictionary of unique descriptions across subjects in the dataset,
-            along with the number of times each pattern occurred.
+            along with the number of times each pattern occurred. In cases
+            where all subjects underwent the same protocol, the most common
+            pattern is most likely the most complete. In cases where the
+            dataset contains multiple protocols, each pattern will need to be
+            inspected manually.
 
         Examples
         --------
@@ -119,7 +123,7 @@ class BIDSReport(object):
             sessions = [sessions]
 
         for ses in sessions:
-            niftis = self.layout.get(subject=subject, extensions='nii.gz',
+            niftis = self.layout.get(subject=subject, extension='nii.gz',
                                      **kwargs)
 
             if niftis:

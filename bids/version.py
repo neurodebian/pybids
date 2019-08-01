@@ -19,7 +19,7 @@ PyBIDS
 PyBIDS is a Python module to interface with datasets conforming BIDS.
 See BIDS paper_ and http://bids.neuroimaging.io website for more information.
 
-.. paper_: http://www.nature.com/articles/sdata201644
+.. _paper: http://www.nature.com/articles/sdata201644
 
 License
 =======
@@ -45,14 +45,14 @@ AUTHOR = "PyBIDS developers"
 AUTHOR_EMAIL = "bids-discussion@googlegroups.com"
 PLATFORMS = "OS Independent"
 # No data for now
-REQUIRES = ["grabbit==0.2.5", "six", "num2words", "numpy", "scipy", "pandas",
-            "nibabel>=2.1", "patsy"]
+REQUIRES = ["num2words", "numpy", "scipy", "pandas>=0.23.0",
+            "nibabel>=2.1", "patsy", "bids-validator", "SQLAlchemy"]
 EXTRAS_REQUIRE = {
    # Just to not break compatibility with externals requiring
    # now deprecated installation schemes
    'analysis': []
 }
-TESTS_REQUIRE = ["pytest>=3.3.0"]
+TESTS_REQUIRE = ["pytest>=3.3.0", 'pathlib; python_version < "3.4"']
 
 
 def package_files(directory):
