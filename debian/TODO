@@ -1,0 +1,2 @@
+- no more grabbids, but now needs `bids-validator` module
+  https://pypi.org/project/bids-validator/
